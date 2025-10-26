@@ -1,89 +1,136 @@
 <!doctype html>
 <html lang="ar">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>انضم إلى مجموعة واتساب</title>
-<style>
-  body {
-    font-family: system-ui, "Noto Naskh Arabic", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    background: #f8f9fb;
-    direction: rtl;
-  }
-  .card {
-    background: #fff;
-    padding: 32px;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    text-align: center;
-    max-width: 420px;
-    width: 90%;
-  }
-  h2 {
-    margin-bottom: 10px;
-  }
-  p {
-    color: #555;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-  a.btn {
-    display: block;
-    text-decoration: none;
-    color: white;
-    padding: 14px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    margin: 8px 0;
-    transition: 0.25s;
-  }
-  .btn-android { background: #25D366; }
-  .btn-ios { background: #0b84ff; }
-  .btn-android:hover { background: #1ebf59; }
-  .btn-ios:hover { background: #006fe3; }
-  .timer {
-    margin-top: 16px;
-    font-size: 14px;
-    color: #777;
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>انضم لمجموعة واتساب</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f7f7fb;margin:0;padding:20px}
+    .card{background:#fff;padding:28px;border-radius:16px;box-shadow:0 6px 24px rgba(20,20,50,.08);max-width:430px;width:100%;text-align:center}
+    h1{margin:0 0 8px;font-size:20px}
+    p{margin:0 0 18px;color:#555}
+    .btn{display:inline-block;padding:12px 16px;margin:8px;border-radius:12px;text-decoration:none;font-weight:600;border:0;cursor:pointer}
+    .android{background:linear-gradient(90deg,#3ddc84,#1fa12b);color:#fff}
+    .ios{background:linear-gradient(90deg,#34aadc,#007aff);color:#fff}
+    .secondary{display:block;margin-top:12px;color:#666;font-size:13px}
+    .copy{background:#eee;color:#333;padding:10px 12px;border-radius:10px;margin-top:12px}
+  </style>
 </head>
 <body>
-  <div class="card">
-    <h2>انضم إلى مجموعتنا على واتساب 💬</h2>
-    <p>اضغط على الزر المناسب لجهازك للانضمام مباشرة.<br>
-       ستبقى الصفحة مفتوحة لمدة دقيقة واحدة ⏱️</p>
+  <div class="card" role="main">
+    <h1>انضم الآن إلى مجموعة الواتساب</h1>
+    <p>اضغط على زر جهازك لفتح المجموعة مباشرة داخل تطبيق WhatsApp — أو سيتم فتح رابط المجموعة في المتصفح كخيار احتياطي.</p>
 
-    <!-- ✅ غيّر هذا الرابط بالرابط الجديد -->
-    <a class="btn btn-android" href="https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt" target="_blank" rel="noopener">
-      📱 دخول لأصحاب Android
-    </a>
+    <!-- === عدِّل هنا: ضع كود الدعوة الخاص بمجموعتك === -->
+    <script>
+      // ضع كود الدعوة هنا (الجزء بعد chat.whatsapp.com/)
+      const inviteCode = "HpZ4mIchpp8ETeUqlqpamk";
+      const webInvite = "https://chat.whatsapp.com/" + inviteCode;
 
-    <a class="btn btn-ios" href="https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt" target="_blank" rel="noopener">
-      🍏 دخول لأصحاب iPhone
-    </a>
+      // روابط محاولات فتح التطبيق:
+      // Android intent (إذا كان المدعوم من المتصفح / إنستاغرام)
+      const androidIntent = "intent://chat?code=" + inviteCode + "#Intent;package=com.whatsapp;scheme=whatsapp;end";
 
-    <div class="timer">
-      الوقت المتبقي: <span id="count">60</span> ثانية
+      // Android alternative (whatsapp://) — بعض المتصفحات تستجيب
+      const whatsappSchemeAndroid = "whatsapp://chat?code=" + inviteCode;
+
+      // iOS (whatsapp scheme)
+      const iosScheme = "whatsapp://chat?code=" + inviteCode;
+    </script>
+
+    <div>
+      <!-- زر أندرويد: حوالة مباشرة عبر intent:// ثم whatsapp:// ثم fallback -->
+      <a id="btn-android" class="btn android" href="#" role="button">فتح في واتساب — أندرويد</a>
+
+      <!-- زر iOS: يحاول whatsapp:// ثم fallback -->
+      <a id="btn-ios" class="btn ios" href="#" role="button">فتح في واتساب — iPhone / iPad</a>
     </div>
-  </div>
 
-<script>
-let seconds = 60;
-let countEl = document.getElementById("count");
-let timer = setInterval(() => {
-  seconds--;
-  countEl.textContent = seconds;
-  if (seconds <= 0) {
-    clearInterval(timer);
-    document.querySelector(".timer").textContent = "انتهى الوقت ⏰";
-  }
-}, 1000);
-</script>
+    <div class="secondary">إن لم يفتح التطبيق، سيتم تحويلك إلى رابط المجموعة في المتصفح (خيار آمن للـ Instagram in-app browser).</div>
+
+    <button id="copyLink" class="copy" type="button">نسخ رابط المجموعة (لاستخدام خارجي)</button>
+    <div id="status" style="margin-top:10px;color:#888;font-size:13px"></div>
+
+    <script>
+      const btnAndroid = document.getElementById("btn-android");
+      const btnIos = document.getElementById("btn-ios");
+      const copyBtn = document.getElementById("copyLink");
+      const status = document.getElementById("status");
+
+      // دالة محاولة الفتح مع fallback إلى الرابط العادي
+      function tryOpen(uriList, fallbackUrl) {
+        // نحاول فتح أول URI متاح. نستخدم نافذة جديدة لتقليل مشاكل بعض متصفحات in-app،
+        // ثم نضع redirect إلى fallback بعد مهلة قصيرة إذا لم يتم فتح التطبيق.
+        let opened = false;
+
+        // أولاً: محاولة فتح باستخدام نافذة / location
+        // نجرّب كل URI في القائمة واحد بعد الآخر بسرعة
+        const tryNext = (i) => {
+          if (i >= uriList.length) {
+            window.location.href = fallbackUrl;
+            return;
+          }
+          const uri = uriList[i];
+
+          // إنشاء عنصر <iframe> بسيط لتجربة schemes في بعض البيئات (هذه طريقة قد تنجح أحياناً)
+          try {
+            // بعض بيئات in-app تمنع iframes، لذا نستخدم طريقة التعيين المباشر ثم timeout
+            const now = Date.now();
+            // افتح URI في نفس النافذة (أحياناً in-app يسمح)
+            window.location.href = uri;
+
+            // بعد 800ms إذا لم يتغير الموقع (أي لم يفتح التطبيق)، ننتقل للـ URI التالي / fallback
+            setTimeout(() => {
+              // إذا ظل المستند بنفس الصفحة، نعتبر أنها فشلت
+              if (Date.now() - now < 1500) {
+                // تجربة URI التالي
+                tryNext(i + 1);
+              }
+            }, 900);
+          } catch (e) {
+            // لو فشل مباشرة، جرّب التالي
+            tryNext(i + 1);
+          }
+        };
+
+        tryNext(0);
+      }
+
+      // Android onclick
+      btnAndroid.addEventListener("click", (e) => {
+        e.preventDefault();
+        status.textContent = "جاري المحاولة لفتح WhatsApp ...";
+        // جرّب intent (أفضل لأندرويد) ثم scheme ثم الرابط العادي
+        tryOpen([androidIntent, whatsappSchemeAndroid], webInvite);
+      });
+
+      // iOS onclick
+      btnIos.addEventListener("click", (e) => {
+        e.preventDefault();
+        status.textContent = "جاري المحاولة لفتح WhatsApp ...";
+        tryOpen([iosScheme], webInvite);
+      });
+
+      // نسخ رابط المجموعة
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(webInvite);
+          status.textContent = "تم نسخ رابط المجموعة.";
+        } catch {
+          status.textContent = "تعذر النسخ تلقائياً. هذا هو الرابط: " + webInvite;
+        }
+      });
+
+      // (اختياري) كشف الجهاز وعرض النص المناسب — لكن زرّينا يبقيان مرئيين
+      (function detectOS() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        if (/android/i.test(ua)) {
+          // ممكن تبرز نص صغير
+        } else if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+          // iOS
+        }
+      })();
+    </script>
+  </div>
 </body>
 </html>
