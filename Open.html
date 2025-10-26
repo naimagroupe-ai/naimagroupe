@@ -17,35 +17,37 @@
   }
   .card {
     background: #fff;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     text-align: center;
     max-width: 420px;
     width: 90%;
   }
   h2 {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   p {
     color: #555;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    line-height: 1.6;
   }
   a.btn {
-    display: inline-block;
-    background: #25D366;
-    color: white;
+    display: block;
     text-decoration: none;
+    color: white;
     padding: 14px 20px;
     border-radius: 10px;
     font-weight: 600;
-    transition: 0.2s;
+    margin: 8px 0;
+    transition: 0.25s;
   }
-  a.btn:hover {
-    background: #1ebf59;
-  }
+  .btn-android { background: #25D366; }
+  .btn-ios { background: #0b84ff; }
+  .btn-android:hover { background: #1ebf59; }
+  .btn-ios:hover { background: #006fe3; }
   .timer {
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 14px;
     color: #777;
   }
@@ -54,15 +56,16 @@
 <body>
   <div class="card">
     <h2>انضم إلى مجموعتنا على واتساب 💬</h2>
-    <p>اضغط على الزر أدناه للانضمام مباشرة إلى المجموعة.<br>
-    ستبقى هذه الصفحة مفتوحة لمدة دقيقة.</p>
+    <p>اضغط على الزر المناسب لجهازك للانضمام مباشرة.<br>
+       ستبقى الصفحة مفتوحة لمدة دقيقة واحدة ⏱️</p>
 
-    <!-- زر الدخول -->
-    <a class="btn" 
-       href="whatsapp://chat?code=EtljN7dZYIRI2ah0wGx3FW" 
-       onclick="openWhatsApp(event)"
-       target="_blank" rel="noopener">
-       🔗 دخول إلى المجموعة
+    <!-- ✅ غيّر هذا الرابط بالرابط الجديد -->
+    <a class="btn btn-android" href="https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt" target="_blank" rel="noopener">
+      📱 دخول لأصحاب Android
+    </a>
+
+    <a class="btn btn-ios" href="https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt" target="_blank" rel="noopener">
+      🍏 دخول لأصحاب iPhone
     </a>
 
     <div class="timer">
@@ -73,8 +76,6 @@
 <script>
 let seconds = 60;
 let countEl = document.getElementById("count");
-
-// عدّاد تنازلي بسيط
 let timer = setInterval(() => {
   seconds--;
   countEl.textContent = seconds;
@@ -83,14 +84,6 @@ let timer = setInterval(() => {
     document.querySelector(".timer").textContent = "انتهى الوقت ⏰";
   }
 }, 1000);
-
-// محاولة فتح تطبيق واتساب مباشرة (بدون Play Store)
-function openWhatsApp(e){
-  e.preventDefault();
-  const link = "https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt";
-  // نحاول فتح التطبيق مباشرة
-  window.location.href = link;
-}
 </script>
 </body>
 </html>
