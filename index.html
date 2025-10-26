@@ -128,14 +128,14 @@
     <div class="badge">مجموعة واتساب</div>
     <h1>انضم إلى مجموعتنا الآن</h1>
     <p>
-      اضغط على الزر أدناه لفتح الدعوة مباشرة في تطبيق واتساب أو في المتصفح
-      حسب جهازك. تم تصميم الصفحة لتعمل بشكل سلس على أجهزة آيفون وأندرويد.
+      اضغط على الزر أدناه للدخول مباشرة إلى مجموعة واتساب الخاصة بنا.
+      إذا كان التطبيق مثبتًا، سيتم فتحه فورًا، وإن لم يكن كذلك فسيتم عرض
+      صفحة الدعوة في المتصفح.
     </p>
 
     <a
-      href="https://chat.whatsapp.com/DGiDmnEUVuFDjGQa1mM7"
-      target="_blank"
-      rel="noopener noreferrer"
+      href="#"
+      id="join-btn"
       class="wa-button"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 24 24">
@@ -146,7 +146,7 @@
     </a>
 
     <p class="note">
-      في حال لم يُفتح التطبيق، سيتم تحويلك إلى صفحة الويب لعرض الدعوة.
+      إذا لم يُفتح التطبيق، سيتم تحويلك تلقائيًا إلى صفحة الدعوة على الويب.
     </p>
 
     <div class="group-code">
@@ -154,12 +154,26 @@
     </div>
 
     <p class="note">
-      يمكنك نسخ هذا الرمز واستخدامه في تطبيق واتساب مباشرة إذا لم يعمل الرابط.
+      يمكنك نسخ هذا الرمز واستخدامه يدويًا داخل تطبيق واتساب إذا احتجت لذلك.
     </p>
   </main>
 
   <script>
-    // تأثير بسيط عند تحميل الصفحة
+    document.getElementById("join-btn").addEventListener("click", function(e) {
+      e.preventDefault();
+      // رابط المجموعة الصحيح للدخول المباشر
+      const groupLink = "https://chat.whatsapp.com/DGiDmnEUVuFDjGQa1mM7";
+
+      // محاولة فتح التطبيق أولاً
+      window.location.href = "whatsapp://chat?link=" + encodeURIComponent(groupLink);
+
+      // بعد نصف ثانية، في حال لم يفتح التطبيق، نفتح رابط المتصفح
+      setTimeout(() => {
+        window.open(groupLink, "_blank");
+      }, 700);
+    });
+
+    // حركة دخول جميلة
     document.addEventListener("DOMContentLoaded", () => {
       const card = document.querySelector(".card");
       card.style.opacity = "0";
