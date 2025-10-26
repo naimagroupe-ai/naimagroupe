@@ -1,189 +1,280 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>انضم إلى مجموعة واتساب</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>انضم إلى مجموعة واتساب الخاصة بنا</title>
+  <meta name="description" content="مكون دعوة للانضمام: عنوان + زر واتساب (تصميم متجاوب موجه للجوال)" />
 
-    :root {
+  <style>
+    :root{
       --wa-green: #25D366;
       --wa-green-dark: #1ebe5a;
+      --bg: #ffffff;
+      --surface: #f7f8fa;
       --text: #0f1724;
       --muted: #6b7280;
-      --bg: #f0fdf4;
-      --white: #fff;
-      --radius: 22px;
-      --shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-      font-family: "Tajawal", sans-serif;
+      --radius: 14px;
+      --max-width: 640px;
+      --gap: 16px;
+      --shadow-sm: 0 6px 18px rgba(12, 16, 24, 0.08);
+      --shadow-lg: 0 18px 40px rgba(12, 16, 24, 0.12);
+      font-family: "Cairo", "Tajawal", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #f9fffb 0%, #e8fbe9 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+    html,body{
+      height:100%;
+      margin:0;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+      color:var(--text);
       direction: rtl;
-      padding: 20px;
-      color: var(--text);
+      text-align: right;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    .card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 22px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      transition: all 0.3s ease;
+    .container{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 18px;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+    .card{
+      width:100%;
+      max-width:var(--max-width);
+      background:linear-gradient(180deg, #fff 0%, #fbfdff 100%);
+      border-radius:18px;
+      box-shadow:var(--shadow-sm);
+      padding:22px;
+      display:flex;
+      gap:var(--gap);
+      align-items:center;
+      justify-content:space-between;
+      box-sizing:border-box;
     }
 
-    .badge {
-      display: inline-block;
-      background: var(--wa-green);
-      color: #fff;
-      font-weight: 700;
-      border-radius: 12px;
-      padding: 6px 12px;
-      font-size: 14px;
-      margin-bottom: 10px;
+    .copy{
+      flex:1 1 auto;
+      min-width:0;
     }
 
-    h1 {
-      font-size: 22px;
-      margin: 10px 0 8px;
-      line-height: 1.4;
+    .eyebrow{
+      display:inline-block;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      margin-bottom:6px;
     }
 
-    p {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 18px;
+    h1{
+      margin:0 0 6px 0;
+      font-size:18px;
+      line-height:1.3;
+      color:var(--text);
+      font-weight:700;
     }
 
-    .wa-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--wa-green);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      transition: background 0.25s ease, transform 0.1s ease;
-      box-shadow: 0 3px 10px rgba(37, 211, 102, 0.25);
+    p.lead{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
     }
 
-    .wa-button:hover {
-      background: var(--wa-green-dark);
-      transform: translateY(-1px);
+    .cta-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-right:12px;
     }
 
-    .wa-button svg {
-      margin-left: 8px;
-      flex-shrink: 0;
+    a.wa-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      background:var(--wa-green);
+      color:#fff;
+      text-decoration:none;
+      border-radius:12px;
+      font-weight:600;
+      font-size:15px;
+      box-shadow:var(--shadow-sm);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      border: 1px solid rgba(0,0,0,0.04);
     }
 
-    .note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 16px;
-      line-height: 1.7;
+    a.wa-btn:active{ transform: translateY(1px) scale(.998); }
+    a.wa-btn:hover{ box-shadow:var(--shadow-lg); background:var(--wa-green-dark); }
+    a.wa-btn:focus{
+      outline:3px solid rgba(37,211,102,0.22);
+      outline-offset:3px;
+      box-shadow:0 8px 30px rgba(37,211,102,0.12);
     }
 
-    .group-code {
-      margin-top: 18px;
-      background: #f3fcf7;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 14px;
-      color: #065f46;
-      direction: ltr;
-      text-align: center;
-      font-weight: 600;
-      word-break: break-all;
+    .wa-icon{
+      width:20px;
+      height:20px;
+      flex:0 0 20px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,0.15);
+      border-radius:6px;
+      padding:2px;
     }
 
-    @media (min-width: 600px) {
-      h1 { font-size: 24px; }
-      .card { padding: 34px; }
-      .wa-button { font-size: 17px; }
+    button.copy-btn{
+      background:transparent;
+      border:1px solid rgba(15,23,36,0.06);
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:13px;
+      color:var(--muted);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    button.copy-btn:focus{
+      outline:3px solid rgba(99,102,241,0.14);
+      outline-offset:3px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:22px;
+      background:#111827;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      font-size:13px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.28);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{
+      opacity:1;
+      pointer-events:auto;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    @media (min-width:720px){
+      .card{
+        padding:20px 28px;
+        gap:24px;
+        border-radius:20px;
+      }
+      h1{ font-size:20px; }
+      .wa-icon{ width:22px; height:22px; }
+      a.wa-btn{ padding:12px 16px; font-size:16px; border-radius:14px; }
+    }
+
+    @media print{
+      a.wa-btn, button.copy-btn{ display:none; }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="badge">مجموعة واتساب</div>
-    <h1>انضم إلى مجموعتنا الآن</h1>
-    <p>
-      اضغط على الزر أدناه للدخول مباشرة إلى مجموعة واتساب الخاصة بنا.
-      إذا كان التطبيق مثبتًا، سيتم فتحه فورًا، وإن لم يكن كذلك فسيتم عرض
-      صفحة الدعوة في المتصفح.
-    </p>
 
-    <a
-      href="#"
-      id="join-btn"
-      class="wa-button"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 24 24">
-        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.03 1C6.46 1 1.98 5.5 1.98 11.06c0 1.95.5 3.85 1.44 5.55L1 23l6.64-2.34a11.89 11.89 0 0 0 4.39.83h.01c5.57 0 10.05-4.5 10.05-10.06 0-2.69-1.05-5.21-2.62-7.92Z" fill="#fff" opacity="0.05"/>
-        <path d="M17.472 14.372c-.298-.149-1.767-.871-2.04-.971-.272-.1-.47-.15-.668.15-.197.299-.766.971-.94 1.17-.174.199-.35.225-.648.075-.298-.15-1.258-.464-2.395-1.48-.885-.79-1.48-1.76-1.653-2.06-.173-.3-.018-.462.13-.61.134-.133.299-.347.449-.52.15-.174.2-.3.3-.5.1-.2 0-.375-.05-.524-.05-.148-.668-1.612-.916-2.21-.242-.579-.487-.5-.668-.51L7.18 6.89c-.197-.01-.477-.01-.727-.01-.248 0-.65.092-.99.45-.342.359-1.293 1.26-1.293 3.07 0 1.81 1.324 3.56 1.507 3.806.184.246 2.605 3.98 6.313 5.58 3.708 1.6 3.708 1.07 4.377 1.01.67-.06 2.254-.92 2.57-1.81.317-.89.317-1.65.223-1.81-.092-.16-.337-.25-.635-.399Z"/>
-      </svg>
-      انضم للمجموعة الآن
-    </a>
+  <main class="container" aria-labelledby="cta-heading">
+    <section class="card" role="region" aria-label="دعوة للانضمام إلى مجموعة واتساب">
+      <div class="copy">
+        <div class="eyebrow">ابقَ على تواصل</div>
+        <h1 id="cta-heading">انضم إلى مجموعة واتساب الخاصة بنا</h1>
+        <p class="lead" id="cta-desc">احصل على آخر التحديثات، وشارك في النقاشات، وتواصل مع الأعضاء مباشرة.</p>
+      </div>
 
-    <p class="note">
-      إذا لم يُفتح التطبيق، سيتم تحويلك تلقائيًا إلى صفحة الدعوة على الويب.
-    </p>
+      <div class="cta-wrap">
+        <a
+          id="waJoin"
+          class="wa-btn"
+          href="https://chat.whatsapp.com/DGiDmnEUVuFDjGQa1mM7bQ?mode=wwt"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="انضم إلى مجموعة واتساب (يفتح في علامة تبويب جديدة)">
+          <span class="wa-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.52 3.48A11.86 11.86 0 0 0 12.03 1C6.46 1 1.98 5.5 1.98 11.06c0 1.95.5 3.85 1.44 5.55L1 23l6.64-2.34a11.89 11.89 0 0 0 4.39.83h.01c5.57 0 10.05-4.5 10.05-10.06 0-2.69-1.05-5.21-2.62-7.92Z" fill="#fff" opacity="0.06"/>
+              <path d="M17.472 14.372c-.298-.149-1.767-.871-2.04-.971-.272-.1-.47-.15-.668.15-.197.299-.766.971-.94 1.17-.174.199-.35.225-.648.075-.298-.15-1.258-.464-2.395-1.48-.885-.79-1.48-1.76-1.653-2.06-.173-.3-.018-.462.13-.61.134-.133.299-.347.449-.52.15-.174.2-.3.3-.5.1-.2 0-.375-.05-.524-.05-.148-.668-1.612-.916-2.21-.242-.579-.487-.5-.668-.51L7.18 6.89c-.197-.01-.477-.01-.727-.01-.248 0-.65.092-.99.45-.342.359-1.293 1.26-1.293 3.07 0 1.81 1.324 3.56 1.507 3.806.184.246 2.605 3.98 6.313 5.58 3.708 1.6 3.708 1.07 4.377 1.01.67-.06 2.254-.92 2.57-1.81.317-.89.317-1.65.223-1.81-.092-.16-.337-.25-.635-.399Z" fill="#fff"/>
+            </svg>
+          </span>
+          <span id="waLabel">انضم عبر واتساب</span>
+        </a>
 
-    <div class="group-code">
-      DGiDmnEUVuFDjGQa1mM7
-    </div>
-
-    <p class="note">
-      يمكنك نسخ هذا الرمز واستخدامه يدويًا داخل تطبيق واتساب إذا احتجت لذلك.
-    </p>
+        <button id="copyBtn" class="copy-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M16 1H4a2 2 0 0 0-2 2v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="8" y="6" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="copyLabel">نسخ الرابط</span>
+        </button>
+      </div>
+    </section>
   </main>
 
+  <div id="toast" class="toast">تم نسخ الرابط إلى الحافظة</div>
+
   <script>
-    document.getElementById("join-btn").addEventListener("click", function(e) {
-      e.preventDefault();
-      // رابط المجموعة الصحيح للدخول المباشر
-      const groupLink = "https://chat.whatsapp.com/DGiDmnEUVuFDjGQa1mM7";
+    (function(){
+      const waLink = "https://chat.whatsapp.com/DGiDmnEUVuFDjGQa1mM7bQ?mode=wwt";
+      const waJoin = document.getElementById('waJoin');
+      const waLabel = document.getElementById('waLabel');
+      const copyBtn = document.getElementById('copyBtn');
+      const copyLabel = document.getElementById('copyLabel');
+      const toast = document.getElementById('toast');
 
-      // محاولة فتح التطبيق أولاً
-      window.location.href = "whatsapp://chat?link=" + encodeURIComponent(groupLink);
+      function isMobile() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        return /android|iphone|ipad|ipod|mobile|silk|kindle|blackberry|opera mini/i.test(ua) || window.innerWidth < 720;
+      }
 
-      // بعد نصف ثانية، في حال لم يفتح التطبيق، نفتح رابط المتصفح
-      setTimeout(() => {
-        window.open(groupLink, "_blank");
-      }, 700);
-    });
+      if (isMobile()) {
+        waLabel.textContent = "افتح في تطبيق واتساب";
+      } else {
+        waLabel.textContent = "افتح في واتساب ويب";
+      }
 
-    // حركة دخول جميلة
-    document.addEventListener("DOMContentLoaded", () => {
-      const card = document.querySelector(".card");
-      card.style.opacity = "0";
-      card.style.transform = "translateY(10px)";
-      setTimeout(() => {
-        card.style.transition = "all 0.6s ease";
-        card.style.opacity = "1";
-        card.style.transform = "translateY(0)";
-      }, 150);
-    });
+      waJoin.href = waLink;
+
+      copyBtn.addEventListener('click', async function(){
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(waLink);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = waLink;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showToast("تم نسخ الرابط إلى الحافظة");
+          const prev = copyLabel.textContent;
+          copyLabel.textContent = 'تم النسخ ✓';
+          copyBtn.disabled = true;
+          setTimeout(()=>{ copyLabel.textContent = prev; copyBtn.disabled = false; }, 1800);
+        } catch (err) {
+          showToast("تعذر نسخ الرابط — انسخه يدويًا");
+        }
+      });
+
+      let toastTimer = null;
+      function showToast(msg = "") {
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=>{ toast.classList.remove('show'); }, 2200);
+      }
+    })();
   </script>
 </body>
 </html>
