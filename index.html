@@ -1,99 +1,96 @@
 <!doctype html>
 <html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>انضم لمجموعة واتساب</title>
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#25D366;--muted:#9aa4b2}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Naskh Arabic",sans-serif;background:linear-gradient(180deg,#071026 0%, #0b1220 100%);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-    .card{background:rgba(255,255,255,0.03);padding:28px;border-radius:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6);max-width:520px;width:100%;text-align:center}
-    h1{margin:0 0 8px;font-size:20px}
-    p{margin:0 0 20px;color:var(--muted)}
-    .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-    .btn{flex:1;min-width:140px;padding:12px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer;box-shadow:0 4px 18px rgba(2,6,23,0.4)}
-    .android{background:linear-gradient(90deg,#2ecc71,#25D366);color:#022; }
-    .ios{background:linear-gradient(90deg,#4aa3ff,#2b7cff);color:#022}
-    small{display:block;margin-top:14px;color:var(--muted)}
-    .hidden{display:none}
-    .notice{margin-top:14px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>انضم إلى مجموعة واتساب</title>
+<style>
+  body {
+    font-family: system-ui, "Noto Naskh Arabic", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #f8f9fb;
+    direction: rtl;
+  }
+  .card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+  }
+  h2 {
+    margin-bottom: 12px;
+  }
+  p {
+    color: #555;
+    margin-bottom: 18px;
+  }
+  a.btn {
+    display: inline-block;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+  a.btn:hover {
+    background: #1ebf59;
+  }
+  .timer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+  }
+</style>
 </head>
 <body>
-  <div class="card" role="main">
-    <h1>انضم لمجموعتنا على واتساب</h1>
-    <p>اضغط الزر المناسب لجهازك ليتم فتح المجموعة في تطبيق واتساب (أو سيتم تحويلك للرابط الاحتياطي إن لم يكن التطبيق مثبتًا).</p>
+  <div class="card">
+    <h2>انضم إلى مجموعتنا على واتساب 💬</h2>
+    <p>اضغط على الزر أدناه للانضمام مباشرة إلى المجموعة.<br>
+    ستبقى هذه الصفحة مفتوحة لمدة دقيقة.</p>
 
-    <div class="btns">
-      <button id="btn-android" class="btn android">فتح على أندرويد</button>
-      <button id="btn-ios" class="btn ios">فتح على آيفون</button>
+    <!-- زر الدخول -->
+    <a class="btn" 
+       href="whatsapp://chat?code=EtljN7dZYIRI2ah0wGx3FW" 
+       onclick="openWhatsApp(event)"
+       target="_blank" rel="noopener">
+       🔗 دخول إلى المجموعة
+    </a>
+
+    <div class="timer">
+      الوقت المتبقي: <span id="count">60</span> ثانية
     </div>
-
-    <small id="autoHint">أو انتظر — سأحاول اكتشاف جهازك تلقائياً...</small>
-
-    <div id="status" class="notice hidden" aria-live="polite"></div>
   </div>
 
-  <script>
-    // ضع هنا رابط مجموعة الواتساب المقدم من قبلك
-    const inviteCode = "EtljN7dZYIRI2ah0wGx3FW";
-    const chatLink = "https://chat.whatsapp.com/" + inviteCode;
-    // صيغة intent لأجهزة Android (تفتح التطبيق مباشرة في Chrome على Android إن كان مثبتاً)
-    const androidIntent = "intent://chat.whatsapp.com/" + inviteCode + "#Intent;package=com.whatsapp;scheme=https;end";
+<script>
+let seconds = 60;
+let countEl = document.getElementById("count");
 
-    const btnAndroid = document.getElementById("btn-android");
-    const btnIos = document.getElementById("btn-ios");
-    const status = document.getElementById("status");
-    const autoHint = document.getElementById("autoHint");
+// عدّاد تنازلي بسيط
+let timer = setInterval(() => {
+  seconds--;
+  countEl.textContent = seconds;
+  if (seconds <= 0) {
+    clearInterval(timer);
+    document.querySelector(".timer").textContent = "انتهى الوقت ⏰";
+  }
+}, 1000);
 
-    function openAndroid(){
-      status.classList.remove("hidden");
-      status.textContent = "جاري محاولة فتح تطبيق واتساب على أندرويد...";
-      // نجرب intent أولاً، ثم بعد 1.2 ثانية نعيد التوجيه للرابط العام (fallback)
-      window.location.href = androidIntent;
-      setTimeout(() => {
-        // لو لم يُفتح التطبيق ستبقى الصفحة في المتصفح، فنعيد التوجيه للرابط العام
-        window.location.href = chatLink;
-      }, 1200);
-    }
-
-    function openIOS(){
-      status.classList.remove("hidden");
-      status.textContent = "جاري فتح الرابط... إن لم يفتح التطبيق سيتم التوجيه للصفحة الاحتياطية.";
-      // على iOS الروابط https (chat.whatsapp.com) تعمل كـ universal link وتفتح التطبيق إن كان مثبتاً
-      window.location.href = chatLink;
-    }
-
-    btnAndroid.addEventListener("click", openAndroid);
-    btnIos.addEventListener("click", openIOS);
-
-    // محاولة اكتشاف الجهاز وعرض الزر الأنسب تلقائياً
-    (function detectAndSuggest(){
-      const ua = navigator.userAgent || navigator.vendor || window.opera;
-      // كشف بسيط لأجهزة iOS / Android
-      const isAndroid = /Android/i.test(ua);
-      const isIOS = /iPhone|iPad|iPod/i.test(ua);
-
-      if(isAndroid){
-        autoHint.textContent = "تم اكتشاف أندرويد — اضغط زر (فتح على أندرويد) أو انتظر لفتح تلقائي.";
-        // نحاول فتح تلقائياً بعد ثانية ونصف
-        setTimeout(openAndroid, 900);
-      } else if(isIOS){
-        autoHint.textContent = "تم اكتشاف iPhone — اضغط زر (فتح على آيفون) أو سيتم فتح الرابط.";
-        setTimeout(openIOS, 900);
-      } else {
-        autoHint.textContent = "لم يتم التعرف على جهازك. استخدم الزر المناسب يدوياً.";
-      }
-    })();
-
-    // تحسين تجربة: لو المستخدم على سطح المكتب نعرض رابط مباشر لنسخه
-    if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-      const copyRow = document.createElement("div");
-      copyRow.style.marginTop = "14px";
-      copyRow.style.color = "#9aa4b2";
-      copyRow.innerHTML = "أنت على كمبيوتر — انسخ هذا الرابط وأرسله إلى جهازك: <br><strong>" + chatLink + "</strong>";
-      document.querySelector(".card").appendChild(copyRow);
-    }
-  </script>
+// محاولة فتح تطبيق واتساب مباشرة (بدون Play Store)
+function openWhatsApp(e){
+  e.preventDefault();
+  const link = "https://chat.whatsapp.com/EtljN7dZYIRI2ah0wGx3FW?mode=wwt";
+  // نحاول فتح التطبيق مباشرة
+  window.location.href = link;
+}
+</script>
 </body>
 </html>
